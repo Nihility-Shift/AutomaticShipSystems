@@ -1,0 +1,72 @@
+﻿using CG.Client.Ship.Interactions;
+using CG.Game;
+using CG.Ship.Modules;
+using HarmonyLib;
+using Photon.Pun;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using VoidManager.Utilities;
+
+namespace AutomaticShipSystems
+{
+    [HarmonyPatch(typeof(ThrusterBooster))]
+    internal class ThrusterBoosterPatch
+    {
+        private static readonly MethodInfo SetLeverPositionMethod = AccessTools.Method(typeof(Lever), "set_LeverPosition");
+
+        [HarmonyPrepare]
+        static void HookEvents()
+        {
+            Configs.ThrusterBoosterConfig.SettingChanged += ToggleAutomaticThrusterBoosters;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch("ChangeState")]
+        static void ChangeState(ThrusterBooster __instance, ThrusterBoosterState state)
+        {
+            if (!PhotonNetwork.IsMasterClient) return;
+
+            if (state == ThrusterBoosterState.Off && Configs.ThrusterBoosterConfig.Value)
+            {
+                Tools.DelayDoUnique(__instance, () => ChargeThrusterBooster(__instance), Configs.ThrusterBoosterDelay);
+            }
+        }
+
+        private static void ChargeThrusterBooster(ThrusterBooster booster)
+        {
+            if (!PhotonNetwork.IsMasterClient || !Tools.PlayerShipExists) return;
+
+            if (booster.state == ThrusterBoosterState.Off)
+            {
+                SetLeverPositionMethod.Invoke(booster.ChargeLever, new object[] { 1f });
+            }
+        }
+
+        internal static void ToggleAutomaticThrusterBoosters(object sender, EventArgs e)
+        {
+            if (!PhotonNetwork.IsMasterClient) return;
+
+            List<ThrusterBooster> boosters = ClientGame.Current.PlayerShip?.Transform?.GetComponent<ThrusterBoosterController>()?.ThrusterBoosters;
+            if (boosters == null) return;
+
+            if (Configs.ThrusterBoosterConfig.Value)
+            {
+                foreach (ThrusterBooster booster in boosters)
+                {
+                    if (booster.state == ThrusterBoosterState.Off)
+                    {
+                        Tools.DelayDoUnique(booster, () => ChargeThrusterBooster(booster), Configs.ThrusterBoosterDelay);
+                    }
+                }
+            }
+            else
+            {
+                foreach (ThrusterBooster booster in boosters)
+                {
+                    Tools.CancelDelayDoUnique(booster);
+                }
+            }
+        }
+    }
+}
