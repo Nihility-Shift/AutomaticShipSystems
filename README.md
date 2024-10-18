@@ -21,6 +21,7 @@ Intended for solo players.
 - Automatically fixes circuit breakers after 30 seconds of being tripped
 - Automatcally charges boosts 1 minute after fully discharged.
 - GUI to disable features
+- Disables progression when starting a session as host.
 
 ### 🎮 Client Usage
 
