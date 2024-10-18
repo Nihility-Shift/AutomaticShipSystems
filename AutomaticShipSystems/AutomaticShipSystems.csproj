@@ -13,7 +13,7 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>AutomaticShipSystems</RootNamespace>
-    <AssemblyTitle>Makes circuit breakers, thruster boosters, and trims self reset. Host side.</AssemblyTitle>
+    <AssemblyTitle>Makes circuit breakers, thruster boosters, and trims self reset. Disables Progression.</AssemblyTitle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>embedded</DebugType>

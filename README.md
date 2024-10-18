@@ -10,7 +10,7 @@ Developed by 18107
 Requires:  BepInEx-BepInExPack-5.4.2100, VoidCrewModdingTeam-VoidManager-1.2.2
 
 
-Makes circuit breakers, thruster boosters, and trims self reset. Host side.  
+Makes circuit breakers, thruster boosters, and trims self reset. Disables Progression.  
 Intended for solo players.
 
 ---------------------
