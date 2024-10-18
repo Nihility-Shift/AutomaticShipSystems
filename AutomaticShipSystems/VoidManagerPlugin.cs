@@ -18,8 +18,10 @@ namespace AutomaticShipSystems
 
         public override MultiplayerType MPType => MultiplayerType.Host;
 
-        public override string Author => "18107";
+        public override string Author => MyPluginInfo.PLUGIN_AUTHORS;
 
-        public override string Description => "Makes circuit breakers, thruster boosters, and trims self reset";
+        public override string Description => MyPluginInfo.PLUGIN_DESCRIPTION;
+
+        public override string ThunderstoreID => MyPluginInfo.PLUGIN_THUNDERSTORE_ID;
     }
 }
