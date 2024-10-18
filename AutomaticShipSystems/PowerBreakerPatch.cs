@@ -1,5 +1,5 @@
 ﻿using CG.Game;
-using Gameplay.PowerSystem;
+using Gameplay.Power;
 using HarmonyLib;
 using Photon.Pun;
 using System;
@@ -21,7 +21,7 @@ namespace AutomaticShipSystems
         [HarmonyPatch("OnPowerStateChange")]
         static void OnPowerStateChange(PowerBreaker __instance, bool isOn)
         {
-            if (!PhotonNetwork.IsMasterClient) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled) return;
 
             if (!isOn && Configs.CircuitBreakerConfig.Value)
             {
@@ -31,14 +31,14 @@ namespace AutomaticShipSystems
 
         private static void ResetCircuitBreakers(PowerBreaker breaker)
         {
-            if (!PhotonNetwork.IsMasterClient || !Tools.PlayerShipExists) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled || !Game.PlayerShipExists) return;
 
             breaker.IsOn.RequestChange(true);
         }
 
         internal static void ToggleAutomaticBreakers(object sender, EventArgs e)
         {
-            if (!PhotonNetwork.IsMasterClient) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled) return;
 
             List<PowerBreaker> breakers = ClientGame.Current?.PlayerShip?.GetComponentInChildren<ProtectedPowerSystem>()?.Breakers;
             if (breakers == null) return;

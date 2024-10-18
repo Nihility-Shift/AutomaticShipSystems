@@ -1,14 +1,10 @@
 ﻿using CG.Game;
 using CG.Ship.Modules;
 using Gameplay.Enhancements;
-using Gameplay.Ship;
 using HarmonyLib;
 using Photon.Pun;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VoidManager.Utilities;
 
 namespace AutomaticShipSystems
@@ -26,7 +22,7 @@ namespace AutomaticShipSystems
         [HarmonyPatch("SetState")]
         static void SetState(Enhancement __instance, EnhancementState newState)
         {
-            if (!PhotonNetwork.IsMasterClient) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled) return;
 
             if (Configs.TrimConfig.Value &&
                 ClientGame.Current?.PlayerShip?.GetModule<Helm>()?.Engine?.GetComponentsInChildren<Enhancement>()?.Contains(__instance) == true &&
@@ -38,7 +34,7 @@ namespace AutomaticShipSystems
 
         private static void ResetTrim(Enhancement trim)
         {
-            if (!PhotonNetwork.IsMasterClient || !Tools.PlayerShipExists) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled || !Game.PlayerShipExists) return;
 
             if (trim.CurrentState.Value == EnhancementState.Inactive)
             {
@@ -48,7 +44,7 @@ namespace AutomaticShipSystems
 
         internal static void ToggleAutomaticTrims(object sender, EventArgs e)
         {
-            if (!PhotonNetwork.IsMasterClient) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled) return;
 
             Enhancement[] trims = ClientGame.Current?.PlayerShip?.GetModule<Helm>()?.Engine?.GetComponentsInChildren<Enhancement>();
             if (trims == null || trims.Length == 0) return;

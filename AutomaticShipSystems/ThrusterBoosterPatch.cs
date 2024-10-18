@@ -25,7 +25,7 @@ namespace AutomaticShipSystems
         [HarmonyPatch("ChangeState")]
         static void ChangeState(ThrusterBooster __instance, ThrusterBoosterState state)
         {
-            if (!PhotonNetwork.IsMasterClient) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled) return;
 
             if (state == ThrusterBoosterState.Off && Configs.ThrusterBoosterConfig.Value)
             {
@@ -35,9 +35,9 @@ namespace AutomaticShipSystems
 
         private static void ChargeThrusterBooster(ThrusterBooster booster)
         {
-            if (!PhotonNetwork.IsMasterClient || !Tools.PlayerShipExists) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled || !Game.PlayerShipExists) return;
 
-            if (booster.state == ThrusterBoosterState.Off)
+            if (booster.State == ThrusterBoosterState.Off)
             {
                 SetLeverPositionMethod.Invoke(booster.ChargeLever, new object[] { 1f });
             }
@@ -45,7 +45,7 @@ namespace AutomaticShipSystems
 
         internal static void ToggleAutomaticThrusterBoosters(object sender, EventArgs e)
         {
-            if (!PhotonNetwork.IsMasterClient) return;
+            if (!PhotonNetwork.IsMasterClient || !VoidManagerPlugin.ModEnabled) return;
 
             List<ThrusterBooster> boosters = ClientGame.Current.PlayerShip?.Transform?.GetComponent<ThrusterBoosterController>()?.ThrusterBoosters;
             if (boosters == null) return;
@@ -54,7 +54,7 @@ namespace AutomaticShipSystems
             {
                 foreach (ThrusterBooster booster in boosters)
                 {
-                    if (booster.state == ThrusterBoosterState.Off)
+                    if (booster.State == ThrusterBoosterState.Off)
                     {
                         Tools.DelayDoUnique(booster, () => ChargeThrusterBooster(booster), Configs.ThrusterBoosterDelay);
                     }
