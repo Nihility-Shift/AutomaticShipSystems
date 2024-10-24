@@ -29,7 +29,7 @@ namespace AutomaticShipSystems
 
             if (state == ThrusterBoosterState.Off && Configs.ThrusterBoosterConfig.Value)
             {
-                Tools.DelayDoUnique(__instance, () => ChargeThrusterBooster(__instance), Configs.ThrusterBoosterDelay);
+                Tools.DelayDoUnique(__instance, () => ChargeThrusterBooster(__instance), Configs.ThrusterBoosterDelay.Value);
             }
         }
 
@@ -56,7 +56,7 @@ namespace AutomaticShipSystems
                 {
                     if (booster.State == ThrusterBoosterState.Off)
                     {
-                        Tools.DelayDoUnique(booster, () => ChargeThrusterBooster(booster), Configs.ThrusterBoosterDelay);
+                        Tools.DelayDoUnique(booster, () => ChargeThrusterBooster(booster), Configs.ThrusterBoosterDelay.Value);
                     }
                 }
             }

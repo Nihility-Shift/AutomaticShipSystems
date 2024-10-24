@@ -1,4 +1,5 @@
-﻿using VoidManager.CustomGUI;
+﻿using UnityEngine;
+using VoidManager.CustomGUI;
 using VoidManager.Utilities;
 
 namespace AutomaticShipSystems
@@ -9,9 +10,16 @@ namespace AutomaticShipSystems
 
         public override void Draw()
         {
-            GUITools.DrawCheckbox("Circuit Breakers", ref Configs.CircuitBreakerConfig);
-            GUITools.DrawCheckbox("Thruster Boosters", ref Configs.ThrusterBoosterConfig);
-            GUITools.DrawCheckbox("Trims", ref Configs.TrimConfig);
+            GUILayout.Label("Timers in MS. 1000 is equal to 1 second.\n");
+
+            GUITools.DrawCheckbox("Auto Circuit Breakers Enabled", ref Configs.CircuitBreakerConfig);
+            GUITools.DrawTextField("Circut Breaker Timer", ref Configs.CircuitBreakerDelay);
+            GUILayout.Label(string.Empty);
+            GUITools.DrawCheckbox("Auto Thruster Boosters Enabled", ref Configs.ThrusterBoosterConfig);
+            GUITools.DrawTextField("Thruster Booster Timer", ref Configs.ThrusterBoosterDelay);
+            GUILayout.Label(string.Empty);
+            GUITools.DrawCheckbox("Auto Trims Enabled", ref Configs.TrimConfig);
+            GUITools.DrawTextField("Trim Timer", ref Configs.TrimDelay);
         }
     }
 }

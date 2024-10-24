@@ -28,7 +28,7 @@ namespace AutomaticShipSystems
                 ClientGame.Current?.PlayerShip?.GetModule<Helm>()?.Engine?.GetComponentsInChildren<Enhancement>()?.Contains(__instance) == true &&
                 newState == EnhancementState.Inactive)
             {
-                Tools.DelayDoUnique(__instance, () => ResetTrim(__instance), Configs.TrimDelay);
+                Tools.DelayDoUnique(__instance, () => ResetTrim(__instance), Configs.TrimDelay.Value);
             }
         }
 
@@ -55,7 +55,7 @@ namespace AutomaticShipSystems
                 {
                     if (trim.CurrentState.Value == EnhancementState.Inactive)
                     {
-                        Tools.DelayDoUnique(trim, () => ResetTrim(trim), Configs.TrimDelay);
+                        Tools.DelayDoUnique(trim, () => ResetTrim(trim), Configs.TrimDelay.Value);
                     }
                 }
             }

@@ -25,7 +25,7 @@ namespace AutomaticShipSystems
 
             if (!isOn && Configs.CircuitBreakerConfig.Value)
             {
-                Tools.DelayDoUnique(__instance, () => ResetCircuitBreakers(__instance), Configs.CircuitBreakerDelay);
+                Tools.DelayDoUnique(__instance, () => ResetCircuitBreakers(__instance), Configs.CircuitBreakerDelay.Value);
             }
         }
 
@@ -49,7 +49,7 @@ namespace AutomaticShipSystems
                 {
                     if (!powerBreaker.IsOn.Value)
                     {
-                        Tools.DelayDoUnique(powerBreaker, () => powerBreaker.IsOn.RequestChange(true), Configs.CircuitBreakerDelay);
+                        Tools.DelayDoUnique(powerBreaker, () => powerBreaker.IsOn.RequestChange(true), Configs.CircuitBreakerDelay.Value);
                     }
                 }
             }
