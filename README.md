@@ -4,9 +4,9 @@
 
 # Automatic Ship Systems
 
-Version 0.0.1  
+Version 0.0.2  
 For Game Version 0.27.0  
-Developed by 18107  
+Developed by 18107, Dragon  
 Requires:  BepInEx-BepInExPack-5.4.2100, VoidCrewModdingTeam-VoidManager-1.2.2
 
 
@@ -20,7 +20,7 @@ Intended for solo players.
 - Automatically fixes trims after 5 minutes of being inactive
 - Automatically fixes circuit breakers after 30 seconds of being tripped
 - Automatcally charges boosts 1 minute after fully discharged.
-- GUI to disable features
+- GUI to configure features
 - Disables progression when starting a session as host.
 
 ### 🎮 Client Usage
