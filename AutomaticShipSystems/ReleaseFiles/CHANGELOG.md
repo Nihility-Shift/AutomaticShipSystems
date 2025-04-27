@@ -1,3 +1,6 @@
+## 0.0.3
+- Updated for Void Crew 1.1.1
+
 ## 0.0.2
 - Added config for timer duration.
 
